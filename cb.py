@@ -7,6 +7,13 @@ import requests_cache
 import pandas as pd
 from sklearn.preprocessing import StandardScaler
 from joblib import load
+import os
+
+# Install dependensi sistem yang diperlukan
+os.system("apt-get update && apt-get install -y zlib1g-dev libjpeg-dev")
+
+# Install Pillow dengan --no-cache-dir supaya install ulang versi terbaru
+os.system("pip install --no-cache-dir pillow==11.0.0")
 
 # Set page config with improved layout
 st.set_page_config(
