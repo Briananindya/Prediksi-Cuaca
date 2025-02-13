@@ -7,14 +7,6 @@ import requests_cache
 import pandas as pd
 from sklearn.preprocessing import StandardScaler
 from joblib import load
-
-# Paksa uninstall versi yang salah
-os.system("pip uninstall -y openmeteo_requests openmeteo_sdk")
-
-# Instal ulang versi yang benar
-os.system("pip install --no-cache-dir openmeteo_requests==1.0.0 openmeteo_sdk==1.1.0")
-
-# Setelah itu baru bisa import
 import openmeteo_requests
 import openmeteo_sdk
 
