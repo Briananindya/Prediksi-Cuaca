@@ -12,7 +12,7 @@ from joblib import load
 os.system("pip uninstall -y openmeteo_requests openmeteo_sdk")
 
 # Instal ulang versi yang benar
-os.system("pip install --no-cache-dir openmeteo_requests==0.1.0 openmeteo_sdk==1.1.0")
+os.system("pip install --no-cache-dir openmeteo_requests==1.0.0 openmeteo_sdk==1.1.0")
 
 # Setelah itu baru bisa import
 import openmeteo_requests
