@@ -9,6 +9,7 @@ from sklearn.preprocessing import StandardScaler
 from joblib import load
 import os
 
+os.system("pip install --no-cache-dir openmeteo_requests openmeteo_sdk")
 os.system("pip install --no-cache-dir openmeteo_sdk")
 os.system("pip uninstall -y pillow")
 os.system("pip install --no-cache-dir pillow==9.5.0 --only-binary :all:")
