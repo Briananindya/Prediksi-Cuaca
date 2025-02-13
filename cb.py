@@ -403,11 +403,15 @@ with col1:
     st.markdown('</div>', unsafe_allow_html=True)
 
 # Handle map clicks
-if input_method == "Klik di Peta" and tmap and tmap["last_clicked"]:
-    lat, lon = tmap["last_clicked"]["lat"], tmap["last_clicked"]["lng"]
+if input_method == "Klik di Peta" and tmap and isinstance(tmap.get("last_clicked"), dict):
+    last_clicked = tmap["last_clicked"]
     
-    # Update session state
-    if st.session_state.location != [lat, lon]:  
-        st.session_state.location = [lat, lon]
-        st.session_state.zoom_location = [lat, lon]
-        st.rerun()
+    if last_clicked:  # Pastikan last_clicked tidak None
+        lat, lon = last_clicked["lat"], last_clicked["lng"]
+        
+        # Update session state hanya jika lokasi berubah
+        if "location" not in st.session_state or st.session_state.location != [lat, lon]:  
+            st.session_state.location = [lat, lon]
+            st.session_state.zoom_location = [lat, lon]
+            st.rerun()  # Pastikan dipanggil di dalam kondisi yang benar
+
