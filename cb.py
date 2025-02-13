@@ -18,146 +18,137 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# Custom CSS for a more modern and clean design
+# Custom CSS 
 st.markdown("""
-    <style>
-        /* Global Styles */
-        .stApp {
-            background-color: #F7F7F7; /* Very light gray background for overall softness */
-            font-family: 'Inter', 'Roboto', sans-serif;
-        }
-        
-        /* Header Styles */
-        .header-container {
-            background: linear-gradient(135deg, #1e3a5f 0%, #4b7c91 100%); /* Navy to light blue gradient */
-            color: white;
-            padding: 2.5rem;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.12); /* Softer shadow */
-            margin: 1rem 0 2rem 0;
-            text-align: center;
-            animation: fadeIn 0.5s ease-in;
-        }
-        .header-container h1 {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 0.75rem;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
-        }
-        .header-container p {
-            font-size: 1.1rem;
-            opacity: 0.8;
-        }
-        
-        /* Card Styles */
-        .card {
-            background: rgba(255, 255, 255, 0.95); /* Light white with transparency */
-            backdrop-filter: blur(5px);
-            border-radius: 20px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.08); /* Light and soft shadow */
-            padding: 2rem;
-            margin-bottom: 1.5rem;
-            transition: all 0.3s ease;
-        }
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.12); /* Slight increase in shadow for hover */
-        }
-        
-        /* Button Styles */
-        .stButton button {
-            background: linear-gradient(135deg, #1e3a5f 0%, #4b7c91 100%) !important; /* Navy to soft blue gradient */
-            color: white !important;
-            border: none !important;
-            border-radius: 12px !important;
-            padding: 0.875rem 2rem !important;
-            font-size: 1.1rem !important;
-            font-weight: 600 !important;
-            letter-spacing: 0.5px !important;
-            box-shadow: 0 5px 15px rgba(30,58,95,0.3) !important;
-            transition: all 0.3s ease !important;
-        }
-        .stButton button:hover {
-            transform: translateY(-2px) !important;
-            box-shadow: 0 8px 20px rgba(30,58,95,0.4) !important;
-        }
-        
-        /* Metric Styles */
-        [data-testid="stMetricValue"] {
-            font-size: 1.8rem !important;
-            font-weight: 700 !important;
-            color: #4b7c91 !important; /* Soft navy blue */
-        }
-        [data-testid="stMetricLabel"] {
-            font-size: 1rem !important;
-            font-weight: 500 !important;
-            color: #7f8c8d !important; /* Lighter gray for labels */
-        }
-        .metric-card {
-            background: white;
-            border-radius: 15px;
-            padding: 1.25rem;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-            transition: all 0.3s ease;
-        }
-        .metric-card:hover {
-            transform: translateY(-3px);
-        }
-        
-        /* Radio Button Styles */
-        .stRadio > div {
-            background: #f8f9fa; /* Very light gray background for radio button container */
-            border-radius: 15px;
-            padding: 1rem;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-        }
-        .stRadio [data-testid="stMarkdownContainer"] > div {
-            gap: 1.5rem !important;
-        }
-        
-        /* Map Container */
-        [data-testid="stIframe"] {
-            border-radius: 20px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-        }
-        
-        /* Weather Prediction Section */
-        .weather-prediction {
-            background: white;
-            border-radius: 20px;
-            padding: 2rem;
-            text-align: center;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            margin-top: 1.5rem;
-        }
-        .weather-icon {
-            font-size: 4rem;
-            margin-bottom: 1rem;
-            color: #f39c12; /* Soft yellow for weather icons */
-        }
-        .weather-temp {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: #2c3e50;
-        }
-        
-        /* Selectbox Styling - Perbaikan untuk label */
-        .stSelectbox [data-testid="stMarkdownContainer"] {
-            display: block !important;
-            visibility: visible !important;
-            opacity: 1 !important;
-        }
-        
-        .stSelectbox > label {
-            display: block !important;
-            visibility: visible !important;
-            opacity: 
+<style>
+/* Global Styles /
+.stApp {
+background-color: #F7F7F7; / Very light gray background for overall softness */
+font-family: 'Inter', 'Roboto', sans-serif;
+}
+/* Header Styles /
+.header-container {
+background: inherit; / Use default color to adapt to theme /
+color: inherit; / Use default color to adapt to theme /
+padding: 2.5rem;
+border-radius: 15px;
+box-shadow: 0 10px 30px rgba(0,0,0,0.12); / Softer shadow /
+margin: 1rem 0 2rem 0;
+text-align: center;
+animation: fadeIn 0.5s ease-in;
+}
+.header-container h1 {
+font-size: 2.5rem;
+font-weight: 700;
+margin-bottom: 0.75rem;
+text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+color: inherit; / Use default color to adapt to theme /
+}
+.header-container p {
+font-size: 1.1rem;
+opacity: 0.8;
+color: inherit; / Use default color to adapt to theme */
+}
+/* Card Styles /
+.card {
+background: inherit; / Default - uses theming /
+backdrop-filter: blur(5px);
+border-radius: 20px;
+box-shadow: 0 8px 20px rgba(0,0,0,0.08); / Light and soft shadow /
+padding: 2rem;
+margin-bottom: 1.5rem;
+transition: all 0.3s ease;
+}
+.card:hover {
+transform: translateY(-5px);
+box-shadow: 0 10px 30px rgba(0,0,0,0.12); / Slight increase in shadow for hover */
+}
+/* Button Styles /
+.stButton button {
+background: linear-gradient(135deg, #1e3a5f 0%, #4b7c91 100%) !important; / Navy to soft blue gradient */
+color: white !important;
+border: none !important;
+border-radius: 12px !important;
+padding: 0.875rem 2rem !important;
+font-size: 1.1rem !important;
+font-weight: 600 !important;
+letter-spacing: 0.5px !important;
+box-shadow: 0 5px 15px rgba(30,58,95,0.3) !important;
+transition: all 0.3s ease !important;
+}
+.stButton button:hover {
+transform: translateY(-2px) !important;
+box-shadow: 0 8px 20px rgba(30,58,95,0.4) !important;
+}
+/* Metric Styles /
+[data-testid="stMetricValue"] {
+font-size: 1.8rem !important;
+font-weight: 700 !important;
+color: inherit; / Use default color to adapt to theme /
+}
+[data-testid="stMetricLabel"] {
+font-size: 1rem !important;
+font-weight: 500 !important;
+color: inherit; / Use default color to adapt to theme /
+}
+.metric-card {
+background: inherit; / Default - uses theming */
+border-radius: 15px;
+padding: 1.25rem;
+box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+transition: all 0.3s ease;
+}
+.metric-card:hover {
+transform: translateY(-3px);
+}
+/* Radio Button Styles /
+.stRadio > div {
+background: inherit; / Default - uses theming */
+border-radius: 15px;
+padding: 1rem;
+box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+}
+.stRadio [data-testid="stMarkdownContainer"] > div {
+gap: 1.5rem !important;
+}
+/* Map Container */
+[data-testid="stIframe"] {
+border-radius: 20px;
+box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+/* Weather Prediction Section /
+.weather-prediction {
+background: inherit; / Allow theme to show default colors /
+border-radius: 20px;
+padding: 2rem;
+text-align: center;
+box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+margin-top: 1.5rem;
+color: inherit; / Use default color to adapt to theme /
+}
+.weather-icon {
+font-size: 4rem;
+margin-bottom: 1rem;
+color: #f39c12; / Soft yellow for weather icons /
+}
+.weather-temp {
+font-size: 2.5rem;
+font-weight: 700;
+color: #2c3e50; / Navy blue for temperature */
+}
+/* Selectbox Styling - Perbaikan untuk label /
+.stSelectbox [data-testid="stMarkdownContainer"] {
+display: block !important;
+visibility: visible !important;
+opacity: 1 !important;
+}
+.stSelectbox > label {
+display: block !important;
+visibility: visible !important;
+opacity: 1 !important;
+color: inherit; / Use default color to adapt to theme */
+}""", unsafe_allow_html=True)
 
-
-""", unsafe_allow_html=True)
-
-
-# Rest of the code remains the same as in the original script, just keeping the core functionality
 # Load ML model dan scaler
 @st.cache_resource
 def load_model():
@@ -269,7 +260,7 @@ input_method = st.radio(
     ["Pilih Provinsi", "Klik di Peta"],
     index=0,
     horizontal=True,
-    label_visibility="visible"  # Pastikan label terlihat
+    label_visibility="visible"  
 )
 
 if input_method == "Pilih Provinsi":
@@ -367,8 +358,8 @@ with col1:
                     
                     # Display weather info
                     st.markdown("""
-                        <div style='background-color: #e9ecef; padding: 1rem; border-radius: 10px; margin-top: 1rem; text-align: center;'>
-                            <h3 style='color: #343a40; margin-bottom: 0.5rem;'>🌤️ Prediksi Cuaca Besok</h3>
+                        <div style='background-color: inherit; padding: 1rem; border-radius: 10px; margin-top: 1rem; text-align: center;'>
+                            <h3 style='color: inherit; margin-bottom: 0.5rem;'>🌤️ Prediksi Cuaca Besok</h3>
                         </div>
                     """, unsafe_allow_html=True)
                     
@@ -383,8 +374,8 @@ with col1:
                     }
                     
                     st.markdown(f"""
-                        <div style='text-align: center; padding: 1rem; background-color: #f8f9fa; border-radius: 10px;'>
-                            <h2 style='color: #495057;'>{weather_icons.get(prediction, "🌈")} {prediction}</h2>
+                        <div style='text-align: center; padding: 1rem; background-color: inherit; border-radius: 10px;'>
+                            <h2 style='color: inherit;'>{weather_icons.get(prediction, "🌈")} {prediction}</h2>
                         </div>
                     """, unsafe_allow_html=True)
                     
