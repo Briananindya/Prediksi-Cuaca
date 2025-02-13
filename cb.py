@@ -9,8 +9,9 @@ from sklearn.preprocessing import StandardScaler
 from joblib import load
 import os
 
-os.system("pip install --no-cache-dir openmeteo_requests openmeteo_sdk")
 os.system("pip install --no-cache-dir openmeteo_sdk")
+os.system("pip uninstall -y openmeteo_requests openmeteo_sdk")
+os.system("pip install --no-cache-dir openmeteo_requests==0.1.0 openmeteo_sdk==1.1.0")
 os.system("pip uninstall -y pillow")
 os.system("pip install --no-cache-dir pillow==9.5.0 --only-binary :all:")
 os.system("apt-get update && apt-get install -y zlib1g-dev libjpeg-dev")
