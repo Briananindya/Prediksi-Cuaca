@@ -1,18 +1,19 @@
+import os
 import streamlit as st
 import folium
 from streamlit_folium import st_folium
 from folium.plugins import LocateControl
-import openmeteo_requests
 import requests_cache
 import pandas as pd
 from sklearn.preprocessing import StandardScaler
 from joblib import load
-import os
 
 try:
+    import openmeteo_requests
     import openmeteo_sdk
 except ModuleNotFoundError:
-    os.system("pip install --no-cache-dir openmeteo_sdk==1.1.0")
+    os.system("pip install --no-cache-dir openmeteo_requests==0.1.0 openmeteo_sdk==1.1.0")
+    import openmeteo_requests
     import openmeteo_sdk
 
 # Set page config with improved layout
