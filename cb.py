@@ -401,7 +401,7 @@ with col1:
         st.warning("⚠️ Pilih lokasi terlebih dahulu untuk melihat prediksi cuaca")
     
     st.markdown('</div>', unsafe_allow_html=True)
-    
+
 # Handle map clicks
 if input_method == "Klik di Peta" and tmap and tmap["last_clicked"]:
     lat, lon = tmap["last_clicked"]["lat"], tmap["last_clicked"]["lng"]
