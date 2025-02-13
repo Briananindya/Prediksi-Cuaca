@@ -8,10 +8,10 @@ import pandas as pd
 from sklearn.preprocessing import StandardScaler
 from joblib import load
 import os
-import os
+
+os.system("pip install --no-cache-dir openmeteo_sdk")
 os.system("pip uninstall -y pillow")
 os.system("pip install --no-cache-dir pillow==9.5.0 --only-binary :all:")
-# Install dependensi sistem yang diperlukan
 os.system("apt-get update && apt-get install -y zlib1g-dev libjpeg-dev")
 
 # Set page config with improved layout
