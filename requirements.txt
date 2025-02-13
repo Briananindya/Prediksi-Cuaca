@@ -9,3 +9,4 @@ requests_cache==1.1.0
 scikit-learn==1.3.0
 joblib==1.3.0
 pillow==9.5.0 --only-binary :all:
+openmeteo_sdk
