@@ -251,6 +251,60 @@ st.markdown("""
     </div>
 """, unsafe_allow_html=True)
 
+import streamlit as st
+
+def about_us():
+    # Judul dengan Jarak Tambahan
+    st.markdown("""
+    <h1 style="text-align: center; margin-bottom: 40px;">✨ Tentang Kami ✨</h1>
+    """, unsafe_allow_html=True)
+
+    # List anggota tim
+    developers = [
+        {"name": "Gungwah", "nim": "1302223042", "image": "gungwah.jpg"},
+        {"name": "Nabila", "nim": "1301223172", "image": "nabila.jpg"},
+        {"name": "Revanza", "nim": "103012330264", "image": "revanza.jpg"},
+        {"name": "Brian", "nim": "Your NIM", "image": "brian.jpg"}
+    ]
+
+    # Cek ukuran layar untuk menyesuaikan ukuran gambar
+    screen_width = st.session_state.get("screen_width", 800)
+
+    if screen_width < 600:  # Jika di HP (layar kecil)
+        image_size = 120  # Gambar lebih kecil
+    else:
+        image_size = 180  # Gambar normal di layar besar
+
+    # Membagi anggota tim menjadi 2 kolom
+    col1, col2 = st.columns(2)  # Dua kolom
+
+    for index, dev in enumerate(developers):
+        with (col1 if index % 2 == 0 else col2):  # Masukkan ke kolom kiri atau kanan
+            col_img, col_text = st.columns([1, 2])  # Kolom untuk gambar & teks
+            
+            with col_img:
+                st.image(dev["image"], width=image_size)
+            
+            with col_text:
+                st.markdown(f"""
+                <div style="display: flex; flex-direction: column; justify-content: center; height: 100%;">
+                    <h4>{dev['name']}</h4>
+                    <p style="margin-top: -10px;">NIM: {dev['nim']}</p>
+                </div>
+                """, unsafe_allow_html=True)
+
+    # Tambahkan informasi di bawah
+    st.markdown("---")  # Garis pemisah
+    st.markdown("""
+    **Berikut adalah anggota tim kami.**  
+    Tim ini terdiri dari individu yang berdedikasi untuk mengembangkan proyek dengan penuh semangat dan kerja sama.  
+    """)
+
+# Tombol untuk membuka halaman "Tentang Kami"
+if st.button("📌 Tentang Kami"):
+    about_us()
+
+
 # Inisialisasi session state
 if "location" not in st.session_state:
     st.session_state.location = None
@@ -260,6 +314,15 @@ if "zoom_level" not in st.session_state:
     st.session_state.zoom_level = 5
 if "weather_prediction" not in st.session_state:
     st.session_state.weather_prediction = None
+
+
+# Create map with colorful style
+m = folium.Map(
+    location=st.session_state.zoom_location,
+    zoom_start=st.session_state.zoom_level,
+    tiles="OpenStreetMap",
+    control_scale=True
+)
 
 # Card for input method
 st.markdown("<h3>📍 Pilih Metode Input Lokasi</h3>", unsafe_allow_html=True)
@@ -271,6 +334,44 @@ input_method = st.radio(
     horizontal=True,
     label_visibility="visible"  
 )
+
+    # Add location control
+LocateControl(auto_start=False).add_to(m)
+    
+    # Add marker if location is selected
+if st.session_state.location:
+        lat, lon = st.session_state.location
+        folium.Marker(
+            [lat, lon],
+            popup=f"Lat: {lat:.4f}, Lon: {lon:.4f}",
+            icon=folium.Icon(color="red", icon="cloud"),
+            draggable=False
+        ).add_to(m)
+# Bungkus peta dalam div agar bisa dikontrol dengan CSS
+with st.container():
+    st.markdown('<div class="map-container">', unsafe_allow_html=True)
+    tmap = st_folium(
+        m,
+        width="100%",  # Biarkan width otomatis
+        height=600,  # Nilai default, tapi akan ditimpa oleh CSS
+        returned_objects=["last_clicked"]
+    )
+    st.markdown('</div>', unsafe_allow_html=True)
+
+
+# Handle map clicks
+if input_method == "Klik di Peta" and tmap and isinstance(tmap.get("last_clicked"), dict):
+    last_clicked = tmap["last_clicked"]
+    
+    if last_clicked:  # Pastikan last_clicked tidak None
+        lat, lon = last_clicked["lat"], last_clicked["lng"]
+        
+        # Update session state hanya jika lokasi berubah
+        if "location" not in st.session_state or st.session_state.location != [lat, lon]:  
+            st.session_state.location = [lat, lon]
+            st.session_state.zoom_location = [lat, lon]
+            st.rerun()
+
 
 if input_method == "Pilih Provinsi":
     # Gunakan tampilan yang lebih simpel
@@ -300,44 +401,27 @@ else:
 st.markdown('</div>', unsafe_allow_html=True)
 
 # Layout columns
-col1, col2 = st.columns([1.5, 3])
 
-with col2:
-    # Create map with colorful style
-    m = folium.Map(
-        location=st.session_state.zoom_location,
-        zoom_start=st.session_state.zoom_level,
-        tiles="OpenStreetMap",
-        control_scale=True
-    )
-    
-    # Add location control
-    LocateControl(auto_start=False).add_to(m)
-    
-    # Add marker if location is selected
-    if st.session_state.location:
-        lat, lon = st.session_state.location
-        folium.Marker(
-            [lat, lon],
-            popup=f"Lat: {lat:.4f}, Lon: {lon:.4f}",
-            icon=folium.Icon(color="red", icon="cloud"),
-            draggable=False
-        ).add_to(m)
+# Tambahkan CSS agar map bisa menyesuaikan tinggi layar/UI
+st.markdown(
+    """
+    <style>
+        .map-container iframe {
+            width: 100% !important;
+            height: 80vh !important;  /* Sesuaikan tinggi dengan viewport */
+            border-radius: 15px;  /* Opsional: Tambahkan border radius */
+        }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
 
-    # Display map
-    tmap = st_folium(
-        m,
-        width=1000,
-        height=600,
-        returned_objects=["last_clicked"]
-    )
 
-with col1:
-    if st.session_state.location:
+if st.session_state.location:
         lat, lon = st.session_state.location
         
         # Display coordinates
-        col_lat, col_lon = st.columns(2)
+        col_lat, col_lon = st.columns([3,2])
         with col_lat:
             st.metric("📍 Latitude", f"{lat:.4f}")
         with col_lon:
@@ -365,13 +449,6 @@ with col1:
                     prediction = model.predict(df_live_scaled)[0]
                     st.session_state.weather_prediction = prediction
                     
-                    # Display weather info
-                    st.markdown("""
-                        <div style='background-color: inherit; padding: 1rem; border-radius: 10px; margin-top: 1rem; text-align: center;'>
-                            <h3 style='color: inherit; margin-bottom: 0.5rem;'>🌤️ Prediksi Cuaca Besok</h3>
-                        </div>
-                    """, unsafe_allow_html=True)
-                    
                     # Display prediction with icon
                     weather_icons = {
                         "Cerah": "☀️",
@@ -381,37 +458,49 @@ with col1:
                         "Hujan Lebat": "🌧️",
                         "Badai": "⛈️"
                     }
-                    
-                    st.markdown(f"""
-                        <div style='text-align: center; padding: 1rem; background-color: inherit; border-radius: 10px;'>
-                            <h2 style='color: inherit;'>{weather_icons.get(prediction, "🌈")} {prediction}</h2>
-                        </div>
-                    """, unsafe_allow_html=True)
-                    
-                    # Display weather parameters
+                    with st.container():
+                        st.info("**Informasi Cuaca dan Prediksi Besok**")
+                    # Buat layout dengan 2 kolom yang ukurannya sama
                     col1, col2 = st.columns(2)
+
+                    # Kolom 1: Menampilkan 4 variabel utama
                     with col1:
                         st.metric("🌡️ Suhu", f"{weather_data['Tavg']:.1f}°C")
                         st.metric("💨 Kecepatan Angin", f"{weather_data['ff_avg']:.1f} m/s")
-                    with col2:
                         st.metric("💧 Kelembaban", f"{weather_data['RH_avg']:.0f}%")
                         st.metric("☀️ Durasi Sinar Matahari", f"{weather_data['ss']:.1f} jam")
+
+                    # Kolom 2: Menampilkan Prediksi Cuaca dalam Ukuran Besar, di tengah kolom 1
+                    with col2:
+                        st.markdown("""
+                            <style>
+                                .prediksi-container {
+                                    display: flex;
+                                    flex-direction: column;
+                                    justify-content: center;
+                                    align-items: center;
+                                    height: 100%;
+                                    padding: 3rem;
+                                    background-color: inherit;
+                                    border-radius: 15px;
+                                    text-align: center;
+                                }
+                                .prediksi-title {
+                                    font-size: 2.5rem;
+                                    margin-bottom: 1rem;
+                                }
+                                .prediksi-text {
+                                    font-size: 4rem;
+                                    font-weight: bold;
+                                }
+                            </style>
+                            <div class="prediksi-container">
+                                <h6 class="prediksi-title">🌤️ Prediksi Cuaca Besok</h6>
+                                <h1 class="prediksi-text">{weather_icon} {prediction}</h1>
+                            </div>
+                        """.replace("{weather_icon}", weather_icons.get(prediction, "🌈")).replace("{prediction}", prediction), unsafe_allow_html=True)
                     
-    else:
-        st.warning("⚠️ Pilih lokasi terlebih dahulu untuk melihat prediksi cuaca")
+else:
+    st.warning("⚠️ Pilih lokasi terlebih dahulu untuk melihat prediksi cuaca")
     
     st.markdown('</div>', unsafe_allow_html=True)
-
-# Handle map clicks
-if input_method == "Klik di Peta" and tmap and isinstance(tmap.get("last_clicked"), dict):
-    last_clicked = tmap["last_clicked"]
-    
-    if last_clicked:  # Pastikan last_clicked tidak None
-        lat, lon = last_clicked["lat"], last_clicked["lng"]
-        
-        # Update session state hanya jika lokasi berubah
-        if "location" not in st.session_state or st.session_state.location != [lat, lon]:  
-            st.session_state.location = [lat, lon]
-            st.session_state.zoom_location = [lat, lon]
-            st.experimental_rerun()
-
