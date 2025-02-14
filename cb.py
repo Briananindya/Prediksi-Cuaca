@@ -431,11 +431,11 @@ if st.session_state.location:
                                     text-align: center;
                                 }
                                 .prediksi-title {
-                                    font-size: 2.5rem;
+                                    font-size: 1rem;
                                     margin-bottom: 1rem;
                                 }
                                 .prediksi-text {
-                                    font-size: 4rem;
+                                    font-size: 2.5rem;
                                     font-weight: bold;
                                 }
                             </style>
