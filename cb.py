@@ -368,7 +368,7 @@ if input_method == "Klik di Peta" and tmap and isinstance(tmap.get("last_clicked
         if "location" not in st.session_state or st.session_state.location != [lat, lon]:  
             st.session_state.location = [lat, lon]
             st.session_state.zoom_location = [lat, lon]
-            st.rerun()
+            sst.experimental_rerun()
 
 
 if input_method == "Pilih Provinsi":
