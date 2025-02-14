@@ -423,7 +423,6 @@ if st.session_state.location:
                                 .prediksi-container {
                                     display: flex;
                                     flex-direction: column;
-                                    justify-content: center;
                                     align-items: center;
                                     height: 100%;
                                     padding: 3rem;
