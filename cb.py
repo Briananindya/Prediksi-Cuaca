@@ -251,58 +251,6 @@ st.markdown("""
     </div>
 """, unsafe_allow_html=True)
 
-# Fungsi untuk menampilkan halaman "Tentang Kami"
-def about_us():
-    # Judul utama dengan jarak tambahan
-    st.markdown("## ✨ Tentang Kami ✨")
-    st.write("")  # Jarak tambahan
-
-    # List anggota tim dengan emoji sesuai cuaca
-    developers = [
-        {"name": "Gungwah", "nim": "1302223042", "image": "gungwah.jpg", "emoji": "🌤️"},
-        {"name": "Nabila", "nim": "1301223172", "image": "nabila.jpg", "emoji": "🌧️"},
-        {"name": "Revanza", "nim": "103012330264", "image": "revanza.jpg", "emoji": "⛈️"},
-        {"name": "Brian", "nim": "Your NIM", "image": "brian.jpg", "emoji": "🌪️"},
-    ]
-
-    # Menyesuaikan ukuran gambar & font sesuai device
-    screen_width = st.session_state.get("screen_width", 800)
-    if screen_width < 600:  # Jika di HP (layar kecil)
-        image_size = 100  # Foto lebih kecil
-        font_size = 16  # Font lebih kecil
-    else:
-        image_size = 140  # Foto lebih besar
-        font_size = 20  # Font lebih besar
-
-    # Membuat tampilan dalam 2 kolom untuk 2x2 layout
-    col1, col2 = st.columns(2)
-
-    for index, dev in enumerate(developers):
-        with (col1 if index % 2 == 0 else col2):  # Alternatif ke kolom kiri & kanan
-            with st.container():  # Kotak pemisah untuk tiap anggota
-                img_col, text_col = st.columns([1, 2])  # Foto di kiri, teks di kanan
-                
-                with img_col:
-                    st.image(dev["image"], width=image_size)  # Foto
-                
-                with text_col:
-                    st.write(f"### {dev['emoji']} {dev['name']}")
-                    st.write(f"**NIM:** {dev['nim']}")
-
-                st.write("---")  # Garis pemisah antar anggota
-
-    # Informasi tambahan di bawah
-    st.markdown("### 📌 Informasi Tim")
-    st.write(
-        "Kami adalah tim yang berdedikasi untuk mengembangkan aplikasi cuaca berbasis AI. "
-        "Dengan semangat kolaborasi, kami terus berinovasi untuk memberikan prediksi cuaca yang akurat dan bermanfaat bagi masyarakat."
-    )
-    st.write("")  # Jarak tambahan
-
-# Tombol untuk membuka halaman "Tentang Kami"
-if st.button("📌 Tentang Kami"):
-    about_us()
-
 # Inisialisasi session state
 if "location" not in st.session_state:
     st.session_state.location = None
@@ -368,7 +316,7 @@ if input_method == "Klik di Peta" and tmap and isinstance(tmap.get("last_clicked
         if "location" not in st.session_state or st.session_state.location != [lat, lon]:  
             st.session_state.location = [lat, lon]
             st.session_state.zoom_location = [lat, lon]
-            sst.experimental_rerun()
+            st.experimental_rerun()
 
 
 if input_method == "Pilih Provinsi":
@@ -502,3 +450,56 @@ else:
     st.warning("⚠️ Pilih lokasi terlebih dahulu untuk melihat prediksi cuaca")
     
     st.markdown('</div>', unsafe_allow_html=True)
+
+# Fungsi untuk menampilkan halaman "Tentang Kami"
+def about_us():
+    # Judul utama dengan jarak tambahan
+    st.markdown("## ✨ Tentang Kami ✨")
+    st.write("")  # Jarak tambahan
+
+    # List anggota tim dengan emoji sesuai cuaca
+    developers = [
+        {"name": "Gungwah", "nim": "1302223042", "image": "gungwah.jpg", "emoji": "🌤️"},
+        {"name": "Nabila", "nim": "1301223172", "image": "nabila.jpg", "emoji": "🌧️"},
+        {"name": "Revanza", "nim": "103012330264", "image": "revanza.jpg", "emoji": "⛈️"},
+        {"name": "Brian", "nim": "Your NIM", "image": "brian.jpg", "emoji": "🌪️"},
+    ]
+
+    # Menyesuaikan ukuran gambar & font sesuai device
+    screen_width = st.session_state.get("screen_width", 800)
+    if screen_width < 600:  # Jika di HP (layar kecil)
+        image_size = 100  # Foto lebih kecil
+        font_size = 16  # Font lebih kecil
+    else:
+        image_size = 140  # Foto lebih besar
+        font_size = 20  # Font lebih besar
+
+    # Membuat tampilan dalam 2 kolom untuk 2x2 layout
+    col1, col2 = st.columns(2)
+
+    for index, dev in enumerate(developers):
+        with (col1 if index % 2 == 0 else col2):  # Alternatif ke kolom kiri & kanan
+            with st.container():  # Kotak pemisah untuk tiap anggota
+                img_col, text_col = st.columns([1, 2])  # Foto di kiri, teks di kanan
+                
+                with img_col:
+                    st.image(dev["image"], width=image_size)  # Foto
+                
+                with text_col:
+                    st.write(f"### {dev['emoji']} {dev['name']}")
+                    st.write(f"**NIM:** {dev['nim']}")
+
+                st.write("---")  # Garis pemisah antar anggota
+
+    # Informasi tambahan di bawah
+    st.markdown("### 📌 Informasi Tim")
+    st.write(
+        "Kami adalah tim yang berdedikasi untuk mengembangkan aplikasi cuaca berbasis AI. "
+        "Dengan semangat kolaborasi, kami terus berinovasi untuk memberikan prediksi cuaca yang akurat dan bermanfaat bagi masyarakat."
+    )
+    st.write("")  # Jarak tambahan
+
+# Tombol untuk membuka halaman "Tentang Kami"
+if st.button("📌 Tentang Kami"):
+    about_us()
+
