@@ -169,6 +169,11 @@ SCALER_PATH = "scaler_fixbgtoke.pkl"
 MODEL_URL_ID = "1rQgSl9pKhzwUJxOtk2ToZ2g7XL7ldr0V"
 SCALER_URL_ID = "1JGqPcTpH-QUtpnMR_YsnEidXkDU6UG1F"
 
+if os.path.exists(MODEL_PATH):
+    st.write(f"Model ditemukan. Ukuran file: {os.path.getsize(MODEL_PATH)} bytes")
+else:
+    st.error("File model tidak ditemukan!")
+    
 @st.cache_resource
 def load_model():
     if not os.path.exists(MODEL_PATH):
