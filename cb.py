@@ -14,6 +14,7 @@ import pickle
 import streamlit as st
 import gdown
 import os
+import requests
 
 # Set page config with improved layout
 st.set_page_config(
@@ -164,17 +165,21 @@ st.markdown("""
 }""", unsafe_allow_html=True)
 
 
-# URL dengan format yang benar
+
+def download_file(url, filename):
+    response = requests.get(url, allow_redirects=True)
+    with open(filename, "wb") as file:
+        file.write(response.content)
+
+MODEL_PATH = "model.pkl"
+SCALER_PATH = "scaler.pkl"
+
 MODEL_URL = "https://drive.google.com/uc?export=download&id=1Ytz6RbWG6kHPKDH304kFvXLjkEQdRmQ1"
 SCALER_URL = "https://drive.google.com/uc?export=download&id=1JGqPcTpH-QUtpnMR_YsnEidXkDU6UG1F"
 
-# Path penyimpanan lokal sementara
-MODEL_PATH = "model_fixbgtoke.pkl"
-SCALER_PATH = "scaler_fixbgtoke.pkl"
+download_file(MODEL_URL, MODEL_PATH)
+download_file(SCALER_URL, SCALER_PATH)
 
-# Download dengan gdown
-gdown.download(MODEL_URL, MODEL_PATH, quiet=False, fuzzy=True)
-gdown.download(SCALER_URL, SCALER_PATH, quiet=False, fuzzy=True)
 
 @st.cache_resource
 def load_model():
