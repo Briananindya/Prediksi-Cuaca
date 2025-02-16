@@ -202,8 +202,8 @@ def fetch_weather_data(latitude, longitude):
     params = {
         "latitude": latitude,
         "longitude": longitude,
-        "start_date": "2025-02-09",
-        "end_date": "2025-02-11",
+        "start_date": "2025-02-12",
+        "end_date": "2025-02-14",
         "daily": ["temperature_2m_mean", "relative_humidity_2m_mean","wind_speed_10m_max", "wind_direction_10m_dominant", "sunshine_duration"],
         "wind_speed_unit": "ms"
     }
