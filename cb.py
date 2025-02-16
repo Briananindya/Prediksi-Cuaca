@@ -14,6 +14,7 @@ import pickle
 import gdown
 import requests
 
+
 # Set page config with improved layout
 st.set_page_config(
     page_title="Prediksi Cuaca Indonesia",
