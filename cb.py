@@ -163,15 +163,18 @@ st.markdown("""
 
 }""", unsafe_allow_html=True)
 
-# Load ML model dan scaler dari file terkompresi
 
-# ID file dari Google Drive
-MODEL_URL_ID = "1AbCdEfGhIjKlMnOpQrStUvWxYz"  # Ganti dengan ID model di GDrive
-SCALER_URL_ID = "1XyZAbCdEfGhIjKlMnOpQrStUvW"  # Ganti dengan ID scaler di GDrive
+# URL dengan format yang benar
+MODEL_URL = "https://drive.google.com/uc?id=1Ytz6RbWG6kHPKDH304kFvXLjkEQdRmQ1"
+SCALER_URL = "https://drive.google.com/uc?id=1JGqPcTpH-QUtpnMR_YsnEidXkDU6UG1F"
 
 # Path penyimpanan lokal sementara
 MODEL_PATH = "model_fixbgtoke.pkl"
 SCALER_PATH = "scaler_fixbgtoke.pkl"
+
+# Download dengan gdown
+gdown.download(MODEL_URL, MODEL_PATH, quiet=False)
+gdown.download(SCALER_URL, SCALER_PATH, quiet=False)
 
 @st.cache_resource
 def load_model():
