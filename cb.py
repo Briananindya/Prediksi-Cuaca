@@ -171,8 +171,8 @@ def download_file(url, filename):
     with open(filename, "wb") as file:
         file.write(response.content)
 
-MODEL_PATH = "model.pkl"
-SCALER_PATH = "scaler.pkl"
+MODEL_PATH = "model_fixbgtoke.pkl"
+SCALER_PATH = "scaler_fixbgtoke.pkl"
 
 MODEL_URL = "https://drive.google.com/file/d/1rQgSl9pKhzwUJxOtk2ToZ2g7XL7ldr0V/view?usp=drive_link"
 SCALER_URL = "https://drive.google.com/file/d/1JGqPcTpH-QUtpnMR_YsnEidXkDU6UG1F/view?usp=sharing"
