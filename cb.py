@@ -174,8 +174,8 @@ def download_file(url, filename):
 MODEL_PATH = "model.pkl"
 SCALER_PATH = "scaler.pkl"
 
-MODEL_URL = "https://drive.google.com/uc?export=download&id=1Ytz6RbWG6kHPKDH304kFvXLjkEQdRmQ1"
-SCALER_URL = "https://drive.google.com/uc?export=download&id=1JGqPcTpH-QUtpnMR_YsnEidXkDU6UG1F"
+MODEL_URL = "https://drive.google.com/file/d/1rQgSl9pKhzwUJxOtk2ToZ2g7XL7ldr0V/view?usp=drive_link"
+SCALER_URL = "https://drive.google.com/file/d/1JGqPcTpH-QUtpnMR_YsnEidXkDU6UG1F/view?usp=sharing"
 
 download_file(MODEL_URL, MODEL_PATH)
 download_file(SCALER_URL, SCALER_PATH)
