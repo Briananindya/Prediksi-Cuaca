@@ -200,7 +200,7 @@ def load_model():
 
     return model, scaler
 
-model, scaler = load_model()
+model, scaler=load_model()
 
 # Fungsi untuk mendapatkan data cuaca
 def fetch_weather_data(latitude, longitude):
