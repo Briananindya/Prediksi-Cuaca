@@ -165,8 +165,8 @@ st.markdown("""
 
 
 # URL dengan format yang benar
-MODEL_URL = "https://drive.google.com/uc?id=1Ytz6RbWG6kHPKDH304kFvXLjkEQdRmQ1"
-SCALER_URL = "https://drive.google.com/uc?id=1JGqPcTpH-QUtpnMR_YsnEidXkDU6UG1F"
+MODEL_URL = "https://drive.google.com/uc?export=download&id=1Ytz6RbWG6kHPKDH304kFvXLjkEQdRmQ1"
+SCALER_URL = "https://drive.google.com/uc?export=download&id=1JGqPcTpH-QUtpnMR_YsnEidXkDU6UG1F"
 
 # Path penyimpanan lokal sementara
 MODEL_PATH = "model_fixbgtoke.pkl"
