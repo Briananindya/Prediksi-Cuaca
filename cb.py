@@ -175,7 +175,7 @@ if os.path.exists(MODEL_PATH):
 else:
     st.error("File model tidak ditemukan!")
     
-@st.cache_resource
+@st.cache_data
 def load_model():
     if not os.path.exists(MODEL_PATH):
         st.warning("Mengunduh model dari Google Drive...")
