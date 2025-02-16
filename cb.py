@@ -9,6 +9,11 @@ from sklearn.preprocessing import StandardScaler
 from joblib import load
 import openmeteo_requests
 import openmeteo_sdk
+import gzip
+import pickle
+import streamlit as st
+import gdown
+import os
 
 # Set page config with improved layout
 st.set_page_config(
@@ -158,11 +163,28 @@ st.markdown("""
 
 }""", unsafe_allow_html=True)
 
-# Load ML model dan scaler
+# Load ML model dan scaler dari file terkompresi
+
+# ID file dari Google Drive
+MODEL_URL_ID = "1AbCdEfGhIjKlMnOpQrStUvWxYz"  # Ganti dengan ID model di GDrive
+SCALER_URL_ID = "1XyZAbCdEfGhIjKlMnOpQrStUvW"  # Ganti dengan ID scaler di GDrive
+
+# Path penyimpanan lokal sementara
+MODEL_PATH = "model_fixbgtoke.pkl"
+SCALER_PATH = "scaler_fixbgtoke.pkl"
+
 @st.cache_resource
 def load_model():
-    model = load("model_fixbgt.pkl")
-    scaler = load("scaler_fixbgt.pkl")
+    # Cek apakah file sudah ada, jika belum, download dari Google Drive
+    if not os.path.exists(MODEL_PATH):
+        gdown.download(f"https://drive.google.com/uc?id={MODEL_URL_ID}", MODEL_PATH, quiet=False)
+    
+    if not os.path.exists(SCALER_PATH):
+        gdown.download(f"https://drive.google.com/uc?id={SCALER_URL_ID}", SCALER_PATH, quiet=False)
+    
+    # Load model dan scaler
+    model = load(MODEL_PATH)
+    scaler = load(SCALER_PATH)
     return model, scaler
 
 model, scaler = load_model()
@@ -347,8 +369,6 @@ else:
 st.markdown('</div>', unsafe_allow_html=True)
 
 # Layout columns
-
-# Tambahkan CSS agar map bisa menyesuaikan tinggi layar/UI
 st.markdown(
     """
     <style>
@@ -453,27 +473,18 @@ else:
 # Fungsi untuk menampilkan halaman "Tentang Kami"
 def about_us():
     # Judul utama dengan jarak tambahan
-    st.markdown("## ✨ Tentang Kami ✨")
-    st.write("")  # Jarak tambahan
+    st.markdown("<h3>✨ Tentang Kami ✨</h3>", unsafe_allow_html=True)
+    st.markdown("<br>", unsafe_allow_html=True)  # Spasi tambahan
 
     # List anggota tim dengan emoji sesuai cuaca
     developers = [
-        {"name": "Gungwah", "nim": "1302223042", "image": "gungwah.jpg", "emoji": "🌤️"},
-        {"name": "Nabila", "nim": "1301223172", "image": "nabila.jpg", "emoji": "🌧️"},
-        {"name": "Revanza", "nim": "103012330264", "image": "revanza.jpg", "emoji": "⛈️"},
-        {"name": "Brian", "nim": "Your NIM", "image": "brian.jpg", "emoji": "🌪️"},
+        {"name": "Anak Agung Naraya Putra", "nim": "103012300328", "image": "gungwah.jpg", "emoji": "🌤️"},
+        {"name": "Nabila Putri Azhari", "nim": "103012300316", "image": "nabila.jpg", "emoji": "🌧️"},
+        {"name": "Reevanza Abel Desta Arifin", "nim": "103012330104", "image": "reevanza.jpg", "emoji": "⛈️"},
+        {"name": "Brian Anindya", "nim": "103012300463", "image": "brian.jpg", "emoji": "🌪️"},
     ]
 
-    # Menyesuaikan ukuran gambar & font sesuai device
-    screen_width = st.session_state.get("screen_width", 800)
-    if screen_width < 600:  # Jika di HP (layar kecil)
-        image_size = 100  # Foto lebih kecil
-        font_size = 16  # Font lebih kecil
-    else:
-        image_size = 140  # Foto lebih besar
-        font_size = 20  # Font lebih besar
-
-    # Membuat tampilan dalam 2 kolom untuk 2x2 layout
+    # Membuat tampilan dalam 2 kolom (2x2 layout)
     col1, col2 = st.columns(2)
 
     for index, dev in enumerate(developers):
@@ -482,13 +493,17 @@ def about_us():
                 img_col, text_col = st.columns([1, 2])  # Foto di kiri, teks di kanan
                 
                 with img_col:
-                    st.image(dev["image"], width=image_size)  # Foto
-                
-                with text_col:
-                    st.write(f"### {dev['emoji']} {dev['name']}")
-                    st.write(f"**NIM:** {dev['nim']}")
+                    # Cek apakah gambar tersedia sebelum menampilkannya
+                    if os.path.exists(dev["image"]):
+                        st.image(dev["image"], width=230)
+                    else:
+                        st.warning(f"Gambar tidak ditemukan: {dev['image']}")  # Debugging error
 
-                st.write("---")  # Garis pemisah antar anggota
+                with text_col:
+                    st.markdown(f"<h4>{dev['emoji']} {dev['name']}</h4>", unsafe_allow_html=True)
+                    st.markdown(f"<p style='font-size: {30};'><strong>NIM:</strong> {dev['nim']}</p>", unsafe_allow_html=True)
+
+            st.markdown("<hr>", unsafe_allow_html=True)  # Garis pemisah antar anggota
 
     # Informasi tambahan di bawah
     st.markdown("### 📌 Informasi Tim")
