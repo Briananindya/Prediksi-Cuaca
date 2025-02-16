@@ -11,9 +11,7 @@ import openmeteo_requests
 import openmeteo_sdk
 import gzip
 import pickle
-import streamlit as st
 import gdown
-import os
 import requests
 
 # Set page config with improved layout
@@ -164,33 +162,35 @@ st.markdown("""
 
 }""", unsafe_allow_html=True)
 
-# ID file dari Google Drive
-MODEL_URL_ID = "1rQgSl9pKhzwUJxOtk2ToZ2g7XL7ldr0V"  # Ganti dengan ID model di GDrive
-SCALER_URL_ID = "1JGqPcTpH-QUtpnMR_YsnEidXkDU6UG1F"  # Ganti dengan ID scaler di GDrive
 
-# Path penyimpanan lokal sementara
 MODEL_PATH = "model_fixbgtoke.pkl"
 SCALER_PATH = "scaler_fixbgtoke.pkl"
 
-ls -lh model_fixbgtoke.pkl
-ls -lh scaler_fixbgtoke.pkl
-
+MODEL_URL_ID = "1rQgSl9pKhzwUJxOtk2ToZ2g7XL7ldr0V"
+SCALER_URL_ID = "1JGqPcTpH-QUtpnMR_YsnEidXkDU6UG1F"
 
 @st.cache_resource
 def load_model():
-    # Cek apakah file sudah ada, jika belum, download dari Google Drive
     if not os.path.exists(MODEL_PATH):
-        gdown.download(f"https://drive.google.com/uc?id={MODEL_URL_ID}", MODEL_PATH, quiet=False)
-    
+        st.warning("Mengunduh model dari Google Drive...")
+        gdown.download(f"https://drive.google.com/uc?id={MODEL_URL_ID}&confirm=t", MODEL_PATH, quiet=False)
+
     if not os.path.exists(SCALER_PATH):
-        gdown.download(f"https://drive.google.com/uc?id={SCALER_URL_ID}", SCALER_PATH, quiet=False)
-    
-    # Load model dan scaler
+        st.warning("Mengunduh scaler dari Google Drive...")
+        gdown.download(f"https://drive.google.com/uc?id={SCALER_URL_ID}&confirm=t", SCALER_PATH, quiet=False)
+
+    if not os.path.exists(MODEL_PATH) or not os.path.exists(SCALER_PATH):
+        st.error("File model atau scaler tidak ditemukan! Unduh secara manual.")
+        st.stop()
+
+    st.success("Model dan Scaler berhasil diunduh dan dimuat!")
     model = load(MODEL_PATH)
     scaler = load(SCALER_PATH)
+
     return model, scaler
 
 model, scaler = load_model()
+
 
 # Fungsi untuk mendapatkan data cuaca
 def fetch_weather_data(latitude, longitude):
