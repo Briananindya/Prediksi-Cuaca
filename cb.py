@@ -512,11 +512,10 @@ def about_us():
                 
                 with img_col:
                     st.image(dev["image"], width=image_size)  # Foto
-                
                 with text_col:
-                    st.write(f"### {dev['emoji']} {dev['name']}")
-                    st.write(f"**NIM:** {dev['nim']}")
-
+                    st.markdown(f"<h4>{dev['emoji']} {dev['name']}</h4>", unsafe_allow_html=True)
+                    st.markdown(f"<p style='font-size: {30};'><strong>NIM:</strong> {dev['nim']}</p>", unsafe_allow_html=True)
+                   
                 st.write("---")  # Garis pemisah antar anggota
 
     # Informasi tambahan di bawah
