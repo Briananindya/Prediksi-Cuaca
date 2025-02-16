@@ -183,18 +183,14 @@ else:
 @st.cache_resource
 def load_model():
     if not os.path.exists(MODEL_PATH):
-        st.warning("Mengunduh model dari Google Drive...")
         gdown.download(f"https://drive.google.com/uc?id={MODEL_URL_ID}&confirm=t", MODEL_PATH, quiet=False)
 
     if not os.path.exists(SCALER_PATH):
-        st.warning("Mengunduh scaler dari Google Drive...")
         gdown.download(f"https://drive.google.com/uc?id={SCALER_URL_ID}&confirm=t", SCALER_PATH, quiet=False)
 
     if not os.path.exists(MODEL_PATH) or not os.path.exists(SCALER_PATH):
-        st.error("File model atau scaler tidak ditemukan! Unduh secara manual.")
         st.stop()
 
-    st.success("Model dan Scaler berhasil diunduh dan dimuat!")
     model = load(MODEL_PATH)
     scaler = load(SCALER_PATH)
 
