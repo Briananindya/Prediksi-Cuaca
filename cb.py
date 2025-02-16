@@ -172,6 +172,10 @@ SCALER_URL_ID = "1JGqPcTpH-QUtpnMR_YsnEidXkDU6UG1F"  # Ganti dengan ID scaler di
 MODEL_PATH = "model_fixbgtoke.pkl"
 SCALER_PATH = "scaler_fixbgtoke.pkl"
 
+ls -lh model_fixbgtoke.pkl
+ls -lh scaler_fixbgtoke.pkl
+
+
 @st.cache_resource
 def load_model():
     # Cek apakah file sudah ada, jika belum, download dari Google Drive
