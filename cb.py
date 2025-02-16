@@ -164,6 +164,11 @@ st.markdown("""
 }""", unsafe_allow_html=True)
 
 
+import os
+import gdown
+import streamlit as st
+from joblib import load  # Pastikan Anda menggunakan library yang benar untuk memuat model
+
 MODEL_PATH = "model_fixbgtoke.pkl"
 SCALER_PATH = "scaler_fixbgtoke.pkl"
 
@@ -174,8 +179,8 @@ if os.path.exists(MODEL_PATH):
     st.write(f"Model ditemukan. Ukuran file: {os.path.getsize(MODEL_PATH)} bytes")
 else:
     st.error("File model tidak ditemukan!")
-    
-@st.cache_data
+
+@st.cache_resource
 def load_model():
     if not os.path.exists(MODEL_PATH):
         st.warning("Mengunduh model dari Google Drive...")
@@ -195,8 +200,7 @@ def load_model():
 
     return model, scaler
 
-model, scaler = load_model()
-
+model, scaler = load_model()
 
 # Fungsi untuk mendapatkan data cuaca
 def fetch_weather_data(latitude, longitude):
