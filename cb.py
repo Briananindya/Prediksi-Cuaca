@@ -173,8 +173,8 @@ MODEL_PATH = "model_fixbgtoke.pkl"
 SCALER_PATH = "scaler_fixbgtoke.pkl"
 
 # Download dengan gdown
-gdown.download(MODEL_URL, MODEL_PATH, quiet=False)
-gdown.download(SCALER_URL, SCALER_PATH, quiet=False)
+gdown.download(MODEL_URL, MODEL_PATH, quiet=False, fuzzy=True)
+gdown.download(SCALER_URL, SCALER_PATH, quiet=False, fuzzy=True)
 
 @st.cache_resource
 def load_model():
