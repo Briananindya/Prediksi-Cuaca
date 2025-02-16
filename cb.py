@@ -166,19 +166,29 @@ st.markdown("""
 
 
 
-def download_file(url, filename):
-    response = requests.get(url, allow_redirects=True)
-    with open(filename, "wb") as file:
-        file.write(response.content)
+# ID file dari Google Drive
+MODEL_URL_ID = "1rQgSl9pKhzwUJxOtk2ToZ2g7XL7ldr0V"  # Ganti dengan ID model di GDrive
+SCALER_URL_ID = "1JGqPcTpH-QUtpnMR_YsnEidXkDU6UG1F"  # Ganti dengan ID scaler di GDrive
 
+# Path penyimpanan lokal sementara
 MODEL_PATH = "model_fixbgtoke.pkl"
 SCALER_PATH = "scaler_fixbgtoke.pkl"
 
-MODEL_URL = "https://drive.google.com/file/d/1rQgSl9pKhzwUJxOtk2ToZ2g7XL7ldr0V/view?usp=drive_link"
-SCALER_URL = "https://drive.google.com/file/d/1JGqPcTpH-QUtpnMR_YsnEidXkDU6UG1F/view?usp=sharing"
+@st.cache_resource
+def load_model():
+    # Cek apakah file sudah ada, jika belum, download dari Google Drive
+    if not os.path.exists(MODEL_PATH):
+        gdown.download(f"https://drive.google.com/uc?id={MODEL_URL_ID}", MODEL_PATH, quiet=False)
+    
+    if not os.path.exists(SCALER_PATH):
+        gdown.download(f"https://drive.google.com/uc?id={SCALER_URL_ID}", SCALER_PATH, quiet=False)
+    
+    # Load model dan scaler
+    model = load(MODEL_PATH)
+    scaler = load(SCALER_PATH)
+    return model, scaler
 
-download_file(MODEL_URL, MODEL_PATH)
-download_file(SCALER_URL, SCALER_PATH)
+model, scaler = load_model()
 
 
 @st.cache_resource
