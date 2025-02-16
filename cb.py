@@ -482,8 +482,8 @@ else:
 # Fungsi untuk menampilkan halaman "Tentang Kami"
 def about_us():
     # Judul utama dengan jarak tambahan
-    st.markdown("<h3>✨ Tentang Kami ✨</h3>", unsafe_allow_html=True)
-    st.markdown("<br>", unsafe_allow_html=True)  # Spasi tambahan
+    st.markdown("## ✨ Tentang Kami ✨")
+    st.write("")  # Jarak tambahan
 
     # List anggota tim dengan emoji sesuai cuaca
     developers = [
@@ -493,7 +493,16 @@ def about_us():
         {"name": "Brian Anindya", "nim": "103012300463", "image": "brian.jpg", "emoji": "🌪️"},
     ]
 
-    # Membuat tampilan dalam 2 kolom (2x2 layout)
+    # Menyesuaikan ukuran gambar & font sesuai device
+    screen_width = st.session_state.get("screen_width", 800)
+    if screen_width < 600:  # Jika di HP (layar kecil)
+        image_size = 100  # Foto lebih kecil
+        font_size = 16  # Font lebih kecil
+    else:
+        image_size = 140  # Foto lebih besar
+        font_size = 20  # Font lebih besar
+
+    # Membuat tampilan dalam 2 kolom untuk 2x2 layout
     col1, col2 = st.columns(2)
 
     for index, dev in enumerate(developers):
@@ -502,17 +511,13 @@ def about_us():
                 img_col, text_col = st.columns([1, 2])  # Foto di kiri, teks di kanan
                 
                 with img_col:
-                    # Cek apakah gambar tersedia sebelum menampilkannya
-                    if os.path.exists(dev["image"]):
-                        st.image(dev["image"], width=230)
-                    else:
-                        st.warning(f"Gambar tidak ditemukan: {dev['image']}")  # Debugging error
-
+                    st.image(dev["image"], width=image_size)  # Foto
+                
                 with text_col:
-                    st.markdown(f"<h4>{dev['emoji']} {dev['name']}</h4>", unsafe_allow_html=True)
-                    st.markdown(f"<p style='font-size: {30};'><strong>NIM:</strong> {dev['nim']}</p>", unsafe_allow_html=True)
+                    st.write(f"### {dev['emoji']} {dev['name']}")
+                    st.write(f"**NIM:** {dev['nim']}")
 
-            st.markdown("<hr>", unsafe_allow_html=True)  # Garis pemisah antar anggota
+                st.write("---")  # Garis pemisah antar anggota
 
     # Informasi tambahan di bawah
     st.markdown("### 📌 Informasi Tim")
